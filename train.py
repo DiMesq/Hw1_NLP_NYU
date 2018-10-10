@@ -58,7 +58,9 @@ def main(ngram, max_vocab_size, emb_dim):
     # Criterion and Optimizer
     criterion = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
-    c = 0
+
+    bad_performance_count = 0
+    max_bad_performance = 25
     pre_val_acc = 0
     best_acc = 0
     running_correct = 0
@@ -91,11 +93,11 @@ def main(ngram, max_vocab_size, emb_dim):
                     best_acc = val_acc
                     torch.save(model.state_dict(), f"models/model_{ngram}gram_{max_vocab_size}vocab_{emb_dim}embed.pth")
                 elif pre_val_acc - val_acc > .1:
-                    c += 1
-                    if c >= 5:
+                    bad_performance_count += 1
+                    if bad_performance_count >= max_bad_performance:
                         break
                 pre_val_acc = val_acc
-        if c >= 5:
+        if bad_performance_count >= max_bad_performance:
             break
     print("Best val accuracy: ", best_acc)
 
