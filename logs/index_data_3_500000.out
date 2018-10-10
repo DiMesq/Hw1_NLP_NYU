@@ -1,0 +1,9 @@
+Argin: 
+	ngram: 3
+	max_vocab_size: 500000
+Train dataset size is 20000
+Val dataset size is 5000
+Test dataset size is 25000
+Train dataset size is 20000
+Val dataset size is 5000
+Test dataset size is 25000
